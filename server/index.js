@@ -8,6 +8,7 @@ const app = express()
 //
 const db = require("./util/database")
 const {User} = require('./util/models')
+const seed = require("./util/seed")
 //
 
 //* Middleware (Defines HOW the server runs)
@@ -31,7 +32,10 @@ app.post("/api/register", async (req, res) => {
 //
 
 //
-db.sync()
+db
+    .sync()
+    // .sync({force:true})
+    // .then(seed)
 //
 
 //* Listen
