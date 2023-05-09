@@ -8,12 +8,17 @@ const app = express()
 //
 const db = require("./util/database")
 const {User} = require('./util/models')
+const {Hobby} = require("./util/models")
 const seed = require("./util/seed")
 //
 
 //* Middleware (Defines HOW the server runs)
 app.use(express.json())
 app.use(cors())
+//
+User.hasMany(Hobby)
+Hobby.belongsTo(User)
+//
 
 //* Endpoints
 //
@@ -28,6 +33,27 @@ app.post("/api/register", async (req, res) => {
     catch(err) {
         res.status(400).send(err)
     }
+})
+app.post("/api/addHobby/:userId", async (req, res) => {
+    const {hobby} = req.body
+    const {userId} = req.params
+
+})
+app.get('/api/hobbies/userId', async (req, res) => {
+    let {userId} = req.params
+    let data = await Hobby.findAll(
+        {
+            where: {userId: userId},
+            attributes: ["name"],
+            include: [
+                {
+                    model: User,
+                    attribues: ["username"]
+                }
+            ]
+        }
+    )
+    res.status(200).send(data)
 })
 //
 

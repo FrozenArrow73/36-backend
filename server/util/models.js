@@ -11,5 +11,14 @@ module.exports = {
         },
         Username: DataTypes.STRING({length:20}),
         password: DataTypes.STRING
+    }),
+    Hobby: db.define( 'hobby', {
+        id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        name: DataTypes.STRING
     })
 }
